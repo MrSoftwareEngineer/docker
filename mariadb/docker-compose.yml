@@ -1,0 +1,29 @@
+version: '3.7'
+
+volumes:
+  mariadb-10-data:
+    external:
+      name: mariadb-10-data
+  mariadb-10-config:
+    external:
+      name: mariadb-10-config
+
+services:
+  mariadb-10:
+    image: mariadb:10
+    container_name: mariadb-10
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - mariadb-10-data:/var/lib/mysql
+      - mariadb-10-config:/etc/mysql
+    ports:
+      - 3306:3306
+
+  adminer:
+    image: adminer
+    container_name: adminer
+    restart: always
+    ports:
+      - 8080:8080
