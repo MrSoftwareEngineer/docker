@@ -1,0 +1,18 @@
+version: '3.7'
+
+volumes:
+  mariadb-10-data:
+    external:
+      name: mariadb-10-data
+  mariadb-10-config:
+    external:
+      name: mariadb-10-config
+
+services:
+  filebrowser:
+    image: filebrowser/filebrowser
+    volumes:
+      - mariadb-10-data:/srv/var/lib/mysql
+      - mariadb-10-config:/srv/etc/mysql
+    ports:
+      - 9090:80
