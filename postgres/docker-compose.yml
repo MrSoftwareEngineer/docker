@@ -1,0 +1,19 @@
+version: '3.7'
+
+volumes:
+  postgres-11-data:
+    external:
+      name: postgres-11-data
+  postgres-11-config:
+    external:
+      name: postgres-11-config
+
+services:
+  postgres-11:
+    image: postgres:11
+    container_name: postgres-11
+    volumes:
+      - postgres-11-config:/etc/postgresql
+      - postgres-11-data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
