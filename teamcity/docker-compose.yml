@@ -1,0 +1,32 @@
+version: '3.7'
+
+volumes:
+  teamcity-server-2019-data:
+    external:
+      name: teamcity-server-2019-data
+  teamcity-server-2019-logs:
+    external:
+      name: teamcity-server-2019-logs
+  teamcity-agent-linux-2019-conf:
+    external:
+      name: teamcity-agent-linux-2019-conf
+
+services:
+  teamcity-server-2019:
+    image: jetbrains/teamcity-server:2019.2.4
+    container_name: teamcity-server-2019
+    restart: always
+    volumes:
+      - teamcity-server-2019-data:/data/teamcity_server/datadir
+      - teamcity-server-2019-logs:/opt/teamcity/logs
+    ports:
+      - 8111:8111
+  teamcity-agent-linux-2019:
+    image: jetbrains/teamcity-agent:2019.2.4-linux
+    container_name: teamcity-agent-linux-2019-conf
+    restart: always
+    environment:
+      SERVER_URL: teamcity-server-2019:8111
+    volumes:
+      - teamcity-agent-linux-2019-conf:/data/teamcity_agent/conf
+      - /var/run/docker.sock:/var/run/docker.sock
